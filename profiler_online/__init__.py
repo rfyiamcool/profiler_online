@@ -3,6 +3,7 @@ import collections
 import signal
 import time
 import gevent
+import threading
 import subprocess
 from werkzeug.serving import BaseWSGIServer, WSGIRequestHandler
 from werkzeug.wrappers import Request, Response
@@ -68,11 +69,13 @@ class Emitter(object):
         request = Request(environ)
         if request.args.get('reset') in ('1', 'true'):
             self.sampler.reset()
-        #cmdstr = './profiler_online/tools/flamegraph.pl'
-        #p = subprocess.Popen(cmdstr, stdin = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
-        #p.stdin.write(stats)
-        #p.stdin.write('\r')
-        #status = p.stdout.readlines()
+        with open('debug.out','w') as f:
+            f.write(stats)
+        cmdstr = 'cat debug.out | profiler_online/tools/flamegraph.pl'
+        p = subprocess.Popen(cmdstr, stdin = subprocess.PIPE,stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
+        print stats
+        stats = p.stdout.read()
+        print stats[:100]
         response = Response(stats)
         return response(environ, start_response)
 
@@ -89,7 +92,9 @@ class _QuietHandler(WSGIRequestHandler):
         pass
 
 def run_profiler(host='0.0.0.0', port=8080):
-    gevent.spawn(run_worker,host,port)
+    #gevent.spawn(run_worker,host,port)
+    t = threading.Thread(target=run_worker,args=(host,port))
+    t.start()
 
 def run_worker(host,port):
     sampler = Sampler()
