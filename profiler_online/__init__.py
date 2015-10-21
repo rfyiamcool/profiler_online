@@ -3,9 +3,11 @@ import collections
 import signal
 import time
 import gevent
+import subprocess
 from werkzeug.serving import BaseWSGIServer, WSGIRequestHandler
 from werkzeug.wrappers import Request, Response
 from profiler_online.log import init_logger
+import os
 
 logger = init_logger('debug.log')
 
@@ -66,6 +68,11 @@ class Emitter(object):
         request = Request(environ)
         if request.args.get('reset') in ('1', 'true'):
             self.sampler.reset()
+        #cmdstr = './profiler_online/tools/flamegraph.pl'
+        #p = subprocess.Popen(cmdstr, stdin = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
+        #p.stdin.write(stats)
+        #p.stdin.write('\r')
+        #status = p.stdout.readlines()
         response = Response(stats)
         return response(environ, start_response)
 
