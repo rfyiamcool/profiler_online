@@ -81,10 +81,10 @@ class _QuietHandler(WSGIRequestHandler):
         """Suppress request logging so as not to pollute application logs."""
         pass
 
-def run_profile(host='0.0.0.0', port=8080):
+def run_profiler(host='0.0.0.0', port=8080):
     gevent.spawn(run_worker,host,port)
 
-def run_worker():
+def run_worker(host,port):
     sampler = Sampler()
     sampler.start()
     e = Emitter(sampler, host, port)
