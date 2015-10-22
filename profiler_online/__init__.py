@@ -8,6 +8,7 @@ import subprocess
 from werkzeug.serving import BaseWSGIServer, WSGIRequestHandler
 from werkzeug.wrappers import Request, Response
 from profiler_online.log import init_logger
+import os
 
 logger = init_logger('debug.log')
 
@@ -58,10 +59,11 @@ class Sampler(object):
 
 
 class Emitter(object):
-    def __init__(self, sampler, host, port):
+    def __init__(self, sampler, host, port, tmp_path):
         self.sampler = sampler
         self.host = host
         self.port = port
+        self.tmp_path = tmp_path
 
     def handle_request(self, environ, start_response):
         stats = self.sampler.output_stats()
@@ -70,7 +72,8 @@ class Emitter(object):
             self.sampler.reset()
         with open('debug.out','w') as f:
             f.write(stats)
-        cmdstr = 'cat debug.out | profiler_online/tools/flamegraph.pl'
+        
+        cmdstr = 'cat %s/debug.out | profiler_online/tools/flamegraph.pl'%self.tmp_path
         p = subprocess.Popen(cmdstr, stdin = subprocess.PIPE,stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
         stats = p.stdout.read()
         response = Response(stats,mimetype='text/html')
@@ -88,16 +91,16 @@ class _QuietHandler(WSGIRequestHandler):
         """Suppress request logging so as not to pollute application logs."""
         pass
 
-def run_profiler(host='0.0.0.0', port=8080):
+def run_profiler(host='0.0.0.0', port=8080, tmp_path=os.getcwd()):
     try:
-        gevent.spawn(run_worker,host,port)
+        gevent.spawn(run_worker,host,port,tmp_path)
     except e:
-        t = threading.Thread(target=run_worker,args=(host,port))
+        t = threading.Thread(target=run_worker,args=(host,port,tmp_path))
         t.start()
 
-def run_worker(host,port):
+def run_worker(host,port,tmp_path):
     sampler = Sampler()
     sampler.start()
-    e = Emitter(sampler, host, port)
+    e = Emitter(sampler, host, port, tmp_path)
     e.run()
 
