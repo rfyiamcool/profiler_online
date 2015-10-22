@@ -8,7 +8,6 @@ import subprocess
 from werkzeug.serving import BaseWSGIServer, WSGIRequestHandler
 from werkzeug.wrappers import Request, Response
 from profiler_online.log import init_logger
-import os
 
 logger = init_logger('debug.log')
 
@@ -90,9 +89,11 @@ class _QuietHandler(WSGIRequestHandler):
         pass
 
 def run_profiler(host='0.0.0.0', port=8080):
-    #gevent.spawn(run_worker,host,port)
-    t = threading.Thread(target=run_worker,args=(host,port))
-    t.start()
+    try:
+        gevent.spawn(run_worker,host,port)
+    except e:
+        t = threading.Thread(target=run_worker,args=(host,port))
+        t.start()
 
 def run_worker(host,port):
     sampler = Sampler()
