@@ -5,27 +5,33 @@
 ### 介绍:
 用来解析查找python程序可能存在的各方面性能或者奇葩问题的工具,通过web访问访问可以直接拿到火焰吐.
 
+本项目是基于FlameGraph封装的,他本身是perl开发的,我就地封了一层调用,外加了web展现.这样对于python工程师来说，可以方便的把调试功能加入应用里面.
+
+Gregg开发的FlameGraph源码    ['https://github.com/brendangregg/FlameGraph'](https://github.com/brendangregg/FlameGraph)
+
+Python systemTap参考文档 ['https://nylas.com/blog/performance'](https://nylas.com/blog/performance)
+
 Will Add Future:
 
+* 加入更完善的信号控制
 * 加入内存的相关信息
 * 查询时间范围
 
 ### 安装:
 
-**pypi:**
+**pypi**
 
 ```
 pip install profiler_online
 ```
 
-**源码安装:**
+**源码安装**
 
 ```
 git clone https://github.com/rfyiamcool/profiler_online.git
 cd profiler_online
 python setup.py install
 ```
-
 
 ### 用法:
 
