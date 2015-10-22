@@ -3,13 +3,17 @@
 `profiler_online`
 
 ### 介绍:
-用来解析查找python程序可能存在的各方面性能或者奇葩问题的工具,通过web访问访问可以直接拿到火焰吐.
+用来解析查找python程序可能存在的各方面性能或者奇葩问题的工具,通过web访问访问可以直接拿到火焰图.
 
 本项目是基于FlameGraph封装的,他本身是perl开发的,我就地封了一层调用,外加了web展现.这样对于python工程师来说，可以方便的把调试功能加入应用里面.
 
-Gregg开发的FlameGraph源码    ['https://github.com/brendangregg/FlameGraph'](https://github.com/brendangregg/FlameGraph)
+*Gregg开发的FlameGraph源码*
 
-Python systemTap参考文档 ['https://nylas.com/blog/performance'](https://nylas.com/blog/performance)
+[https://github.com/brendangregg/FlameGraph](https://github.com/brendangregg/FlameGraph)
+
+*Python systemTap参考文档*
+
+[https://github.com/nylas/nylas-perftools](https://github.com/nylas/nylas-perftools)
 
 Will Add Future:
 
@@ -40,6 +44,16 @@ python setup.py install
 ```
 from profiler_online import run_profiler
 run_profiler()
+```
+
+run_profiler支持三个参数:
+```
+debug_config = {
+    'host': '127.0.0.1',
+    'port': 8080,
+    'tmp_path: '/tmp/debug'
+}
+run_profiler(**debug_config)
 ```
 
 ### 测试:
