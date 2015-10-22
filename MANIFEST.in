@@ -1,2 +1,2 @@
-include  README.md profiler_online/tools
-recursive-include README.md profiler_online/tools
+include README.md profiler_online/tools/*.pl
+recursive-include profiler_online tools/*.pl

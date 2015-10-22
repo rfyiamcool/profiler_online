@@ -73,7 +73,7 @@ class Emitter(object):
         with open('debug.out','w') as f:
             f.write(stats)
         
-        cmdstr = 'cat %s/debug.out | profiler_online/tools/flamegraph.pl'%self.tmp_path
+        cmdstr = 'cat %s/debug.out | tools/flamegraph.pl'%self.tmp_path
         p = subprocess.Popen(cmdstr, stdin = subprocess.PIPE,stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
         stats = p.stdout.read()
         response = Response(stats,mimetype='text/html')
