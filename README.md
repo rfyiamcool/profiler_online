@@ -14,7 +14,7 @@ run_profiler()
 
 打开浏览器 http://127.0.0.1:8080  这样就可以显示正在运行服务的性能火焰图了.
 
-![image](https://github.com/rfyiamcool/profiler_online/master/img/demo.png)
+![image](https://github.com/rfyiamcool/profiler_online/raw/master/img/demo.png)
 
 ### 问题:
 
