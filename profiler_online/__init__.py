@@ -72,8 +72,9 @@ class Emitter(object):
             self.sampler.reset()
         with open('debug.out','w') as f:
             f.write(stats)
-        
-        cmdstr = 'cat %s/debug.out | tools/flamegraph.pl'%self.tmp_path
+
+        pl = "%s/tools/flamegraph.pl"%os.path.dirname(__file__)
+        cmdstr = 'cat %s/debug.out | perl %s'%(self.tmp_path,pl)
         p = subprocess.Popen(cmdstr, stdin = subprocess.PIPE,stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
         stats = p.stdout.read()
         response = Response(stats,mimetype='text/html')
