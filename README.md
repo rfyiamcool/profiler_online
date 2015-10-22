@@ -5,10 +5,27 @@
 ### 介绍:
 用来解析查找python程序可能存在的各方面性能或者奇葩问题的工具,通过web访问访问可以直接拿到火焰吐.
 
-Add Future:
+Will Add Future:
 
 * 加入内存的相关信息
 * 查询时间范围
+
+### 安装:
+
+**pypi:**
+
+```
+pip install profiler_online
+```
+
+**源码安装:**
+
+```
+git clone https://github.com/rfyiamcool/profiler_online.git
+cd profiler_online
+python setup.py install
+```
+
 
 ### 用法:
 

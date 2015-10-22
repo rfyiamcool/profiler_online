@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='profiler_online',
-    version='2.0',
+    version='2.1',
     description='profile python app online, Display FlameGraph in a browser',
     long_description=open('README.md').read(),
     keywords = ["profiler_online","fengyun"],
