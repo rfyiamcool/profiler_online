@@ -14,7 +14,8 @@ run_profiler()
 
 打开浏览器 http://127.0.0.1:8080  这样就可以显示正在运行服务的性能火焰图了.
 
-![image](https://github.com/rfyiamcool/profiler_online/raw/master/img/demo.jpg)
+![image](https://github.com/rfyiamcool/profiler_online//master/img/demo.png)
+
 ### 问题:
 
 下面是以前创建火焰图的方法.
@@ -26,7 +27,7 @@ curl "127.0.0.1:8080" | profiler_online/tools/flamegraph.pl > flame.html
 
 改进的方法:
 ```
-直接浏览器打开
+直接浏览器打开,地址栏 --> 127.0.0.1:8080
 ```
 
 在开发过程中,遇到了python系统调用时不能正常捕获输出. 现在已经改为临时文件的方式.
