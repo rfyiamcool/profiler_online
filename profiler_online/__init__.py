@@ -73,10 +73,8 @@ class Emitter(object):
             f.write(stats)
         cmdstr = 'cat debug.out | profiler_online/tools/flamegraph.pl'
         p = subprocess.Popen(cmdstr, stdin = subprocess.PIPE,stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
-        print stats
         stats = p.stdout.read()
-        print stats[:100]
-        response = Response(stats)
+        response = Response(stats,mimetype='text/html')
         return response(environ, start_response)
 
     def run(self):

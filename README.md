@@ -14,9 +14,10 @@ run_profiler()
 
 打开浏览器 http://127.0.0.1:8080  这样就可以显示正在运行服务的性能火焰图了.
 
+![image](https://github.com/rfyiamcool/profiler_online/raw/master/img/demo.jpg)
 ### 问题:
 
-以前的方法.
+下面是以前创建火焰图的方法.
 
 ```
 python test.py
@@ -43,3 +44,5 @@ try:
 except Exception, e:
     print e,Exception
 ```
+
+
